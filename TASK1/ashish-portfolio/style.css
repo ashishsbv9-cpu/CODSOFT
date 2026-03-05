@@ -1,0 +1,341 @@
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f0f0f;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* ================= CANVAS ================= */
+#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 18px 10%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 600;
+    color: #00ffcc;
+}
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+}
+
+.navbar ul li {
+    display: inline-block;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.navbar ul li a:hover {
+    color: #00ffcc;
+}/* ================= HERO ================= */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    padding: 0 20px;
+}
+.hero h1 {
+    font-size: 52px;
+    font-weight: 700;
+}
+
+.highlight {
+    color: #00ffcc;
+    text-shadow: 0 0 12px rgba(0,255,204,0.4);
+}
+
+.tagline {
+    margin-top: 25px;
+    font-size: 22px;
+    color: #cccccc;
+    min-height: 28px; /* prevents jumping */
+}
+
+.cursor {
+    margin-left: 5px;
+    animation: blink 0.8s infinite;
+    color: #00ffcc;
+}
+
+@keyframes blink {
+    0% {opacity:1;}
+    50% {opacity:0;}
+    100% {opacity:1;}
+}
+
+/* ================= HERO BUTTONS ================= */
+.hero-buttons {
+    margin-top: 45px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.primary-btn,
+.secondary-btn {
+    padding: 14px 26px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.primary-btn {
+    background: #00ffcc;
+    color: black;
+}
+
+.primary-btn:hover {
+    background: white;
+    transform: translateY(-3px);
+}
+
+.secondary-btn {
+    border: 2px solid #00ffcc;
+    color: #00ffcc;
+}
+
+.secondary-btn:hover {
+    background: #00ffcc;
+    color: black;
+    transform: translateY(-3px);
+}
+
+/* ================= SECTIONS ================= */
+section {
+    padding: 100px 10%;
+    text-align: center;
+}
+
+h2 {
+    font-size: 32px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+/* Underline for section titles */
+h2::after {
+    content: "";
+    width: 60px;
+    height: 3px;
+    background: #00ffcc;
+    display: block;
+    margin: 12px auto 0;
+}
+
+/* ================= ABOUT ================= */
+.about-card {
+    max-width: 750px;
+    margin: auto;
+    padding: 40px;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    border: 1px solid rgba(0,255,204,0.3);
+}
+
+.about-card img {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    border: 3px solid #00ffcc;
+    margin-bottom: 25px;
+    object-fit: cover;
+}
+
+.about-card p {
+    line-height: 1.9;
+    color: #dddddd;
+}
+
+/* ================= PROJECTS ================= */
+.projects-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 35px;
+}
+
+.project-card {
+    width: 300px;
+    padding: 35px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0,255,204,0.4);
+    transition: 0.4s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-12px);
+    background: #00ffcc;
+    color: black;
+}
+
+.project-btn {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 10px 20px;
+    background: black;
+    color: #00ffcc;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.project-card:hover .project-btn {
+    background: white;
+    color: black;
+}
+/* ================= SKILLS ================= */
+
+.skills-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 35px;
+}
+
+.skill-card {
+    width: 300px;
+    padding: 35px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0,255,204,0.4);
+    transition: 0.4s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-12px);
+    background: #00ffcc;
+    color: black;
+}
+
+.skill-card h3 {
+    margin-bottom: 15px;
+    color: #00ffcc;
+    transition: 0.3s ease;
+}
+
+.skill-card:hover h3 {
+    color: black;
+}
+/* ================= RESUME ================= */
+.btn {
+    padding: 15px 30px;
+    background: #00ffcc;
+    color: black;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    background: white;
+    transform: translateY(-3px);
+}
+
+/* ================= CONTACT ================= */
+.social-icons {
+    margin-top: 30px;
+}
+
+.social-icons a {
+    color: #00ffcc;
+    font-size: 26px;
+    margin: 0 18px;
+    transition: 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: white;
+    transform: scale(1.2);
+}
+
+/* ================= FOOTER ================= */
+footer {
+    padding: 25px;
+    text-align: center;
+    background: #111;
+    color: #aaaaaa;
+    margin-top: 60px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero {
+        padding: 160px 20px 100px;
+    }
+
+    .navbar ul {
+        gap: 20px;
+    }
+
+    .projects-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .project-card {
+        width: 90%;
+    }
+}
+.cursor {
+    margin-left: 5px;
+    color: #00ffcc;
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
