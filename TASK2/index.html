@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FluxAI - Smart Productivity</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:system-ui;
+color:white;
+overflow-x:hidden;
+background:#05070a;
+}
+
+/* animated gradient mesh */
+.mesh{
+position:fixed;
+width:120%;
+height:120%;
+background:radial-gradient(circle at 20% 30%,#ff00cc33,transparent 40%),
+radial-gradient(circle at 80% 40%,#00e5ff33,transparent 40%),
+radial-gradient(circle at 50% 80%,#ff7b0033,transparent 40%);
+animation:meshMove 12s ease-in-out infinite alternate;
+z-index:-2;
+}
+
+@keyframes meshMove{
+0%{transform:translate(-5%,-5%) scale(1)}
+100%{transform:translate(5%,5%) scale(1.1)}
+}
+
+/* floating particles */
+.particle{
+position:fixed;
+width:4px;
+height:4px;
+background:white;
+opacity:0.4;
+border-radius:50%;
+animation:float 20s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-10vh)}
+}
+
+/* navbar */
+nav{
+position:fixed;
+width:100%;
+backdrop-filter:blur(14px);
+background:rgba(0,0,0,0.35);
+padding:15px 40px;
+display:flex;
+justify-content:space-between;
+z-index:1000;
+}
+
+/* hero */
+
+.hero-title{
+font-size:64px;
+font-weight:800;
+text-align:bottom;
+}
+
+.typing{
+font-size:22px;
+margin-top:20px;
+opacity:.8;
+}
+
+.dashboard{
+margin-top:60px;
+width:700px;
+max-width:90%;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(12px);
+border-radius:20px;
+padding:30px;
+box-shadow:0 30px 60px rgba(0,0,0,0.5);
+animation:floatCard 6s ease-in-out infinite;
+}
+
+@keyframes floatCard{
+0%{transform:translateY(0)}
+50%{transform:translateY(-12px)}
+100%{transform:translateY(0)}
+}
+
+.bar{
+height:10px;
+border-radius:6px;
+background:linear-gradient(90deg,#ff00cc,#ff7b00);
+margin:10px 0;
+}
+
+/* spotlight hover cards */
+.feature-card{
+position:relative;
+background:rgba(255,255,255,0.05);
+padding:30px;
+border-radius:16px;
+transition:0.4s;
+overflow:hidden;
+}
+
+.feature-card::before{
+content:"";
+position:absolute;
+width:200px;
+height:200px;
+background:radial-gradient(circle,#ffffff33,transparent 60%);
+top:var(--y);
+left:var(--x);
+transform:translate(-50%,-50%);
+opacity:0;
+transition:opacity .3s;
+}
+
+.feature-card:hover::before{
+opacity:1;
+}
+
+.feature-card:hover{
+transform:translateY(-10px) scale(1.05);
+box-shadow:0 25px 50px rgba(0,0,0,0.6);
+}
+
+/* stats */
+.stat{
+font-size:48px;
+font-weight:700;
+}
+
+/* cursor glow */
+.cursor-glow{
+position:fixed;
+width:300px;
+height:300px;
+border-radius:50%;
+pointer-events:none;
+background:radial-gradient(circle,#ff00cc33,transparent 60%);
+transform:translate(-50%,-50%);
+z-index:0;
+}
+
+.hiddenEl{
+opacity:0;
+transform:translateY(40px);
+transition:1s;
+}
+.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.cta-btn{
+padding:14px 34px;
+border-radius:50px;
+background:linear-gradient(45deg,#ff7b00,#ff00cc);
+transition:0.4s;
+}
+
+.cta-btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 25px #ff00cc;
+}
+
+.toggle{
+background:#111;
+padding:6px;
+border-radius:50px;
+display:inline-flex;
+gap:6px;
+}
+
+.toggle button{
+padding:8px 18px;
+border-radius:40px;
+}
+
+.activePlan{
+background:linear-gradient(45deg,#ff7b00,#ff00cc);
+}
+
+.parallax{
+background:url("https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1600");
+background-size:cover;
+background-attachment:fixed;
+background-position:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="mesh"></div>
+<div class="cursor-glow" id="glow"></div>
+
+<script>
+for(let i=0;i<40;i++){
+let p=document.createElement("div")
+p.className="particle"
+p.style.left=Math.random()*100+"vw"
+p.style.animationDuration=10+Math.random()*20+"s"
+document.body.appendChild(p)
+}
+</script>
+
+<nav>
+<h1 class="text-2xl font-bold">FluxAI</h1>
+<div class="space-x-6">
+<a href="#features">Features</a>
+<a href="#pricing">Pricing</a>
+<a href="#reviews">Reviews</a>
+<a href="#" class="cta-btn">Get Started</a>
+</div>
+</nav>
+
+<section class="min-h-screen flex flex-col items-center justify-center px-6 text-center pt-32">
+<h1 class="hero-title hiddenEl">AI Powered Productivity</h1>
+<div class="typing" id="typing"></div>
+<button class="cta-btn mt-8 hiddenEl">Start Free Trial</button>
+
+<div class="dashboard hiddenEl">
+<h3 class="text-xl mb-4">AI Productivity Dashboard</h3>
+<div class="bar" style="width:80%"></div>
+<div class="bar" style="width:60%"></div>
+<div class="bar" style="width:90%"></div>
+<div class="bar" style="width:70%"></div>
+</div>
+</section>
+
+<section class="py-24 text-center hiddenEl">
+<h2 class="text-4xl font-bold mb-10">Trusted by Developers Worldwide</h2>
+<div class="grid md:grid-cols-3 gap-10">
+<div>
+<div class="stat" data-target="12000">0</div>
+<p>Users</p>
+</div>
+<div>
+<div class="stat" data-target="350">0</div>
+<p>Companies</p>
+</div>
+<div>
+<div class="stat" data-target="98">0</div>
+<p>% Satisfaction</p>
+</div>
+</div>
+</section>
+
+<section id="features" class="py-24 px-10">
+<h2 class="text-4xl font-bold text-center mb-16">Powerful Features</h2>
+
+<div class="grid md:grid-cols-3 gap-10" id="featureGrid">
+
+<div class="feature-card hiddenEl">
+<i class="fa-solid fa-bolt text-3xl mb-4"></i>
+<h3 class="text-2xl font-semibold mb-2">Lightning Fast</h3>
+<p>Generate code, ideas, and workflows instantly.</p>
+</div>
+
+<div class="feature-card hiddenEl">
+<i class="fa-solid fa-brain text-3xl mb-4"></i>
+<h3 class="text-2xl font-semibold mb-2">Smart AI</h3>
+<p>AI learns your workflow and improves productivity.</p>
+</div>
+
+<div class="feature-card hiddenEl">
+<i class="fa-solid fa-lock text-3xl mb-4"></i>
+<h3 class="text-2xl font-semibold mb-2">Secure</h3>
+<p>Enterprise-grade security for your data.</p>
+</div>
+
+</div>
+</section>
+
+<section class="parallax py-40 text-center">
+<h2 class="text-5xl font-bold">Work Faster With Intelligent Automation</h2>
+</section>
+
+<section id="pricing" class="py-24 px-10 text-center">
+<h2 class="text-4xl font-bold mb-10">Simple Pricing</h2>
+
+<div class="toggle mb-10">
+<button id="monthly" class="activePlan">Monthly</button>
+<button id="yearly">Yearly</button>
+</div>
+
+<div class="grid md:grid-cols-3 gap-10">
+
+<div class="feature-card">
+<h3 class="text-2xl mb-4">Starter</h3>
+<p class="text-3xl font-bold price" data-month="0" data-year="0">Free</p>
+</div>
+
+<div class="feature-card border border-pink-500 scale-110">
+<h3 class="text-2xl mb-4">Pro</h3>
+<p class="text-3xl font-bold price" data-month="499" data-year="399">₹499</p>
+</div>
+
+<div class="feature-card">
+<h3 class="text-2xl mb-4">Enterprise</h3>
+<p class="text-3xl font-bold">Custom</p>
+</div>
+
+</div>
+</section>
+
+<section id="reviews" class="py-24 px-10 text-center">
+<h2 class="text-4xl font-bold mb-16">What Users Say</h2>
+<div class="grid md:grid-cols-3 gap-10">
+<div class="feature-card hiddenEl">
+<p>"FluxAI doubled my productivity while coding."</p>
+<p class="mt-4 font-bold">Developer</p>
+</div>
+<div class="feature-card hiddenEl">
+<p>"Amazing tool for students learning programming."</p>
+<p class="mt-4 font-bold">Engineering Student</p>
+</div>
+<div class="feature-card hiddenEl">
+<p>"Our startup saves hours every day."</p>
+<p class="mt-4 font-bold">Founder</p>
+</div>
+</div>
+</section>
+
+<section class="py-32 text-center">
+<h2 class="text-5xl font-bold mb-8">Ready to Work Smarter?</h2>
+<button class="cta-btn text-xl">Start Using FluxAI</button>
+</section>
+
+<footer class="py-10 text-center opacity-70">
+<p>© 2026 FluxAI</p>
+</footer>
+
+<script>
+
+/* scroll reveal */
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){entry.target.classList.add("show")}
+})
+})
+
+document.querySelectorAll(".hiddenEl").forEach(el=>observer.observe(el))
+
+/* typing */
+const words=["Build faster","Automate tasks","Boost productivity","Powered by AI"]
+let i=0,j=0,current="",isDeleting=false
+
+function type(){
+current=words[i]
+if(!isDeleting){j++}else{j--}
+
+document.getElementById("typing").textContent=current.substring(0,j)
+
+if(!isDeleting && j===current.length){isDeleting=true;setTimeout(type,1200);return}
+if(isDeleting && j===0){isDeleting=false;i=(i+1)%words.length}
+
+setTimeout(type,isDeleting?60:120)
+}
+
+type()
+
+/* cursor glow */
+const glow=document.getElementById("glow")
+document.addEventListener("mousemove",e=>{
+ glow.style.left=e.clientX+"px"
+ glow.style.top=e.clientY+"px"
+})
+
+/* stats counter */
+const counters=document.querySelectorAll('.stat')
+const speed=200
+
+counters.forEach(counter=>{
+const update=()=>{
+const target=+counter.getAttribute('data-target')
+const count=+counter.innerText
+const inc=target/speed
+if(count<target){
+counter.innerText=Math.ceil(count+inc)
+setTimeout(update,20)
+}else{counter.innerText=target}
+}
+update()
+})
+
+/* pricing toggle */
+const monthlyBtn=document.getElementById('monthly')
+const yearlyBtn=document.getElementById('yearly')
+const prices=document.querySelectorAll('.price')
+
+monthlyBtn.onclick=()=>{
+monthlyBtn.classList.add('activePlan')
+yearlyBtn.classList.remove('activePlan')
+prices.forEach(p=>{
+const val=p.getAttribute('data-month')
+if(val==0)p.innerText='Free'
+else p.innerText='₹'+val
+})
+}
+
+yearlyBtn.onclick=()=>{
+yearlyBtn.classList.add('activePlan')
+monthlyBtn.classList.remove('activePlan')
+prices.forEach(p=>{
+const val=p.getAttribute('data-year')
+if(val==0)p.innerText='Free'
+else p.innerText='₹'+val
+})
+}
+
+/* spotlight hover */
+const cards=document.querySelectorAll('.feature-card')
+
+cards.forEach(card=>{
+card.addEventListener('mousemove',e=>{
+const rect=card.getBoundingClientRect()
+const x=e.clientX-rect.left
+const y=e.clientY-rect.top
+card.style.setProperty('--x',x+'px')
+card.style.setProperty('--y',y+'px')
+})
+})
+
+</script>
+
+</body>
+</html>

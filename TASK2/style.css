@@ -1,0 +1,108 @@
+/* HERO SECTION */
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    margin-top:80px;   /* space for navbar */
+    padding:40px 20px;
+}
+
+/* HERO CONTAINER */
+.hero-container{
+    max-width:2000px;
+    width:100%;
+    margin:center;
+}
+
+/* HEADING */
+.hero h1{
+    font-size:40px;
+    font-weight:800;
+    line-height:1.2;
+    margin-bottom:20px;
+}
+
+/* SUBTITLE */
+.hero p{
+    font-size:22px;
+    margin-bottom:30px;
+    opacity:0.9;
+}
+
+/* BUTTON */
+.hero button{
+    padding:14px 30px;
+    font-size:16px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(45deg,#ff7a18,#ff0066);
+    color:white;
+    cursor:pointer;
+    margin-bottom:40px;
+}
+
+.dashboard{
+position:relative;
+z-index:5;
+margin-top:60px;
+width:700px;
+max-width:90%;
+background:rgba(255,255,255,0.08);
+border-radius:20px;
+padding:30px;
+box-shadow:0 30px 60px rgba(0,0,0,0.5);
+
+animation: floatCard 6s ease-in-out infinite;
+
+transform:translateZ(0);
+will-change:transform;
+}
+.dashboard{
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.1);
+}
+/* PROGRESS BARS */
+.bar{
+    height:10px;
+    border-radius:10px;
+    margin:15px 0;
+    background:linear-gradient(90deg,#ff00cc,#ff8800);
+}
+
+.bar1{width:90%;}
+.bar2{width:70%;}
+.bar3{width:95%;}
+.bar4{width:80%;}
+@keyframes floatCard{
+0%{
+transform: translate3d(0,0,0);
+}
+50%{
+transform: translate3d(0,-8px,0);
+}
+100%{
+transform: translate3d(0,0,0);
+}
+}
+.cursor-glow{
+position:fixed;
+width:200px;
+height:200px;
+will-change: transform;
+}
+.feature-card{
+transform:translateZ(0);
+}
+.particle{
+position:fixed;
+width:4px;
+height:4px;
+background:white;
+opacity:0.4;
+border-radius:50%;
+animation:float 20s linear infinite;
+z-index:-1;
+}
