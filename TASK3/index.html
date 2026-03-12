@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Scientific Calculator</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-4">
+
+<div class="bg-gray-800 p-6 rounded-2xl shadow-xl w-full max-w-md">
+
+<!-- HEADER -->
+
+<div class="flex justify-between items-center mb-4">
+
+<h1 class="text-white text-lg font-semibold">
+Calculator
+</h1>
+
+<button id="toggleBtn"
+onclick="toggleScientific()"
+class="bg-blue-500 text-white px-3 py-1 rounded text-sm">
+
+Scientific
+
+</button>
+
+</div>
+
+<!-- DISPLAY -->
+
+<input
+id="display"
+type="text"
+readonly
+class="w-full text-right text-3xl p-3 mb-4 rounded-lg bg-black text-white"
+/>
+
+<!-- SCIENTIFIC PANEL -->
+
+<div id="scientific" class="grid grid-cols-4 gap-2 mb-3 hidden">
+
+<button class="sci" onclick="append('sin(')">sin</button>
+<button class="sci" onclick="append('cos(')">cos</button>
+<button class="sci" onclick="append('tan(')">tan</button>
+<button class="sci" onclick="append('sqrt(')">√</button>
+
+<button class="sci" onclick="append('log(')">log</button>
+<button class="sci" onclick="append('pi')">π</button>
+<button class="sci" onclick="append('e')">e</button>
+<button class="sci" onclick="append('^2')">x²</button>
+
+</div>
+
+<!-- BUTTON GRID -->
+
+<div class="grid grid-cols-4 gap-2">
+
+<button class="btn bg-red-500" onclick="clearDisplay()">C</button>
+<button class="btn" onclick="deleteLast()">DEL</button>
+<button class="btn" onclick="append('(')">(</button>
+<button class="btn" onclick="append(')')">)</button>
+
+<button class="btn" onclick="append('7')">7</button>
+<button class="btn" onclick="append('8')">8</button>
+<button class="btn" onclick="append('9')">9</button>
+<button class="btn bg-orange-500" onclick="append('/')">÷</button>
+
+<button class="btn" onclick="append('4')">4</button>
+<button class="btn" onclick="append('5')">5</button>
+<button class="btn" onclick="append('6')">6</button>
+<button class="btn bg-orange-500" onclick="append('*')">×</button>
+
+<button class="btn" onclick="append('1')">1</button>
+<button class="btn" onclick="append('2')">2</button>
+<button class="btn" onclick="append('3')">3</button>
+<button class="btn bg-orange-500" onclick="append('-')">−</button>
+
+<button class="btn col-span-2" onclick="append('0')">0</button>
+<button class="btn" onclick="append('.')">.</button>
+<button class="btn bg-orange-500" onclick="append('+')">+</button>
+
+<button class="btn col-span-3 bg-green-500" onclick="calculate()">=</button>
+<button class="btn" onclick="append('%')">%</button>
+
+</div>
+
+</div>
+
+<style>
+
+.btn{
+padding:12px;
+border-radius:10px;
+background:#374151;
+color:white;
+font-size:16px;
+}
+
+.btn:hover{
+background:#4b5563;
+}
+
+.sci{
+padding:10px;
+background:#1f2937;
+color:white;
+border-radius:8px;
+font-size:14px;
+}
+
+.sci:hover{
+background:#374151;
+}
+
+</style>
+
+<script>
+
+let display = document.getElementById("display")
+
+function append(val){
+display.value += val
+}
+
+function clearDisplay(){
+display.value = ""
+}
+
+function deleteLast(){
+display.value = display.value.slice(0,-1)
+}
+
+function toggleScientific(){
+
+let sci = document.getElementById("scientific")
+let btn = document.getElementById("toggleBtn")
+
+sci.classList.toggle("hidden")
+
+btn.innerText = sci.classList.contains("hidden")
+? "Scientific"
+: "Basic"
+
+}
+
+function calculate(){
+
+try{
+
+let exp = display.value
+
+exp = exp.replace(/sin\(([^)]+)\)/g,(m,x)=>Math.sin(x*Math.PI/180))
+exp = exp.replace(/cos\(([^)]+)\)/g,(m,x)=>Math.cos(x*Math.PI/180))
+exp = exp.replace(/tan\(([^)]+)\)/g,(m,x)=>Math.tan(x*Math.PI/180))
+
+exp = exp.replace(/sqrt\(([^)]+)\)/g,(m,x)=>Math.sqrt(x))
+
+exp = exp.replace(/log\(([^)]+)\)/g,(m,x)=>Math.log10(x))
+
+exp = exp.replace(/pi/g,Math.PI)
+
+exp = exp.replace(/e/g,Math.E)
+
+exp = exp.replace(/\^2/g,"**2")
+
+display.value = eval(exp)
+
+}
+
+catch{
+
+display.value = "Error"
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
